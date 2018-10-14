@@ -1,6 +1,6 @@
 {
-  "name": "opennic-desktop",
-  "version": "0.2.5-beta.1",
+  "name": "distdns-desktop",
+  "version": "0.1.0-beta.1",
   "description": "Quickly set your desktop to use DNS servers from OpenNic projet",
   "main": "main.js",
   "scripts": {
@@ -11,8 +11,8 @@
     "release": "./node_modules/.bin/electron-builder build -mwl --x64 -p always"
   },
   "build": {
-    "publish": "github",
-    "appId": "org.opennic.opennic-app",
+    "publish": "distributed-webs",
+    "appId": "org.distdns.distdns",
     "mac": {
       "icon": "assets/images/icon.icns",
       "category": "public.app-category.utilities"
@@ -34,7 +34,7 @@
     "linux": {
       "icon": "assets/images/iconset",
       "category": "Network",
-      "synopsis": "DNS from OpenNic projet",
+      "synopsis": "DNS from DistDNS projet",
       "target": [
         "deb",
         "rpm"
@@ -51,11 +51,11 @@
     "app",
     "desktop"
   ],
-  "author": "wil <stdin@lesspheres.fr>",
-  "homepage": "https://github.com/mandrag0ra/opennic-desktop",
+  "author": "BenchX <jared@benchx.io>",
+  "homepage": "https://github.com/distdns/distdns-desktop",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mandrag0ra/opennic-desktop"
+    "url": "https://github.com/distdns/distdns-desktop"
   },
   "license": "MIT",
   "devDependencies": {
