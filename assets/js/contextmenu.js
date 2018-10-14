@@ -36,6 +36,24 @@ const template = [
       require("electron").shell.openExternal("https://www.distdns.io");
     },
   },
+  {
+    label: "About dWeb Protocol",
+    click() {
+      require("electron").shell.openExternal("https://www.dwebs.io");
+    },
+  },
+  {
+    label: "About Arisen",
+    click() {
+      require("electron").shell.openExternal("https://www.arisen.network");
+    },
+  },
+  {
+    label: "About dPay",
+    click() {
+      require("electron").shell.openExternal("https://www.dpays.io");
+    },
+  },
 ];
 
 const menu = Menu.buildFromTemplate(template);
