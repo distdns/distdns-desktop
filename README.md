@@ -1,6 +1,6 @@
-# opennic-desktop
+# DistDNS Desktop
 
-OpenNic Desktop is an easy way to use [OpenNic DNS](https://www.opennic.org) servers.
+DistDNS Desktop is an easy way to use [DistDNS](https://www.distdns.io) servers.
 Base on electron framework, it should work on Linux, MacOS and Windows.
 
 There is not released binaries for the moment as the app is still in heavy development.
@@ -8,7 +8,7 @@ There is not released binaries for the moment as the app is still in heavy devel
 ## Install
 
 ```bash
-git clone https://github.com/mandrag0ra/opennic-desktop
+git clone https://github.com/distdns/distdns-desktop
 cd opennic-desktop
 yarn install
 ```
