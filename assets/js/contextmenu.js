@@ -31,9 +31,9 @@ const template = [
     type: "separator",
   },
   {
-    label: "About",
+    label: "About DistDNS",
     click() {
-      require("electron").shell.openExternal("https://www.opennic.org");
+      require("electron").shell.openExternal("https://www.distdns.io");
     },
   },
 ];
