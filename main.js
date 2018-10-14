@@ -85,9 +85,9 @@ function setAppVersion() {
 
 // App Ready
 app.on("ready", () => {
-  // Default OpenNic API URL
+  // Default DistDNS API URL
   if (!store.has("apiUrl")) {
-    store.set("apiUrl", "https://api.opennic.org/geoip/?json&res=2");
+    store.set("apiUrl", "https://api.distdns/geoip/?json&res=2");
     store.set("anon-setting", true);
   }
   // Set App version
@@ -95,7 +95,7 @@ app.on("ready", () => {
 
   // Internet active connection ?
   osCmd
-    .ping("opennic.org")
+    .ping("distdns.io")
     .then(res => {
       if (res == "success") {
         store.set("network", true);
@@ -125,7 +125,7 @@ app.on("ready", () => {
   if (process.platform == "darwin") {
     tray.setPressedImage(imageFolder + "/osx/iconHighlight.png");
   }
-  tray.setToolTip("OpenNic DNS !");
+  tray.setToolTip("DistDNS!");
   tray.setContextMenu(trayContextMenu);
 
   // Backup default configuration
@@ -174,7 +174,7 @@ const trayMenuTemplate = [
     type: "separator"
   },
   {
-    label: "Quit OpenNic",
+    label: "Quit DistDNS",
     click: function() {
       closeApp();
     }
@@ -190,8 +190,8 @@ const getDefaultConfig = () => {
   });
 };
 
-// OpenNic DNS servers
-const getOpennicServers = () => {
+// DistDNS DNS servers
+const getDistdnsServers = () => {
   return new Promise((resolve, reject) => {
     const apiUrl = store.get("apiUrl");
     const request = net.request(apiUrl);
@@ -208,7 +208,7 @@ const getOpennicServers = () => {
             };
             serversSettings.push(setting);
           }
-          store.set("opennic_servers", serversSettings);
+          store.set("distdns_servers", serversSettings);
           resolve(true);
         } catch (err) {
           log.error("Unable to save DNS settings from API request: ", err);
@@ -216,16 +216,16 @@ const getOpennicServers = () => {
         }
       });
       response.on("error", err => {
-        log.error("Data response error from OpenNic API: ", err);
+        log.error("Data response error from DistDNS API: ", err);
         reject(false);
       });
       response.on("end", () => {
-        log.info("Request to OpenNic API end !");
+        log.info("Request to DistDNS API end !");
       });
     });
 
     request.on("error", err => {
-      log.error("Request to OpenNic API error: ", err);
+      log.error("Request to DistDNS API error: ", err);
       reject(false);
     });
     request.end();
@@ -235,7 +235,7 @@ const getOpennicServers = () => {
 const buildApiUrl = () => {
   // Set default url
   if (!store.get("default-api-url")) {
-    store.set("default-api-url", "https://api.opennic.org/geoip/?json&res=2");
+    store.set("default-api-url", "https://api.distdns.io/geoip/?json&res=2");
   }
 
   let url = store.get("default-api-url");
@@ -256,15 +256,15 @@ const buildApiUrl = () => {
 
 const matchDnsConfig = () => {
   return new Promise((resolve, reject) => {
-    dns = store.get("opennic_servers");
-    opennic_array = [dns[0].ip, dns[1].ip];
+    dns = store.get("distdns_servers");
+    distdns_array = [dns[0].ip, dns[1].ip];
 
     osCmd
       .getCurrentDns()
       .then(data => {
         if (
-          opennic_array.length == data.dns.length &&
-          !opennic_array.some(v => data.dns.indexOf(v) < 0)
+          distdns_array.length == data.dns.length &&
+          !distdns_array.some(v => data.dns.indexOf(v) < 0)
         ) {
           resolve([true, data]);
         } else {
@@ -391,10 +391,10 @@ ipcMain.on("enable-disable", (event, arg) => {
     });
 });
 
-ipcMain.on("get-opennic-servers", (event, arg) => {
-  getOpennicServers()
+ipcMain.on("get-distdns-servers", (event, arg) => {
+  getDistdnsServers()
     .then(res => {
-      event.sender.send("get-opennic-servers-reply", res);
+      event.sender.send("get-distdns-servers-reply", res);
       if (store.get("enable")) {
         matchDnsConfig().then(match => {
           if (!match[0]) {
@@ -409,7 +409,7 @@ ipcMain.on("get-opennic-servers", (event, arg) => {
       }
     })
     .catch(error => {
-      event.sender.send("get-opennic-servers-reply", false);
+      event.sender.send("get-distdns-servers-reply", false);
       log.error("Error while getting new DNS servers");
     });
 });
