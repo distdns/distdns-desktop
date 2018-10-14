@@ -27,16 +27,16 @@ const getCurrentConfig = () => {
 };
 
 const render = () => {
-  if (!store.has("opennic_servers")) {
-    ipcRenderer.send("get-opennic-servers", "");
-    ipcRenderer.on("get-opennic-servers-reply", (event, response) => {
+  if (!store.has("distdns_servers")) {
+    ipcRenderer.send("get-distdns-servers", "");
+    ipcRenderer.on("get-distdns-servers-reply", (event, response) => {
       if (response) {
         document.getElementById("loading").classList.add("hide");
         getCurrentConfig();
       } else {
         document.getElementById("disable").classList.toggle("hidden");
         document.getElementById("statusmsg").innerHTML =
-          "Could not retrieve OpenNic DNS servers !\nBe sure to be connected to internet or restart the application";
+          "Could not retrieve DistDNS DNS servers !\nBe sure to be connected to internet or restart the application";
       }
     });
   } else {
